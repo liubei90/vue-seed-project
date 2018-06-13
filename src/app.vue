@@ -1,36 +1,22 @@
 <template>
   <div>
-    234{{title}}
-    <div>
-      <router-link to="/test">test</router-link>
-      <router-link to="/user/1">user1</router-link>
-      <router-link to="/user/2">user2</router-link>
-    </div>
-    <transition>
-      <keep-alive :exclude="/NotAlive$/">
-          <router-view />
-      </keep-alive>
-    </transition>
-
-    <div>
-      <todo-list></todo-list>
-    </div>
+      234{{title}}
+      <transition>
+        <keep-alive :exclude="/NotAlive$/">
+            <router-view />
+        </keep-alive>
+      </transition>
   </div>
 </template>
 
 <script>
-import todoList from './todo-list.vue';
-
 export default {
-  provide: function() {
+  provide: function () {
     return {
-      obj: this.obj,
+      obj: this.obj
     }
   },
-  components: {
-    todoList,
-  },
-  data() {
+  data () {
     return {
       title: 'hello, world',
       obj: {
@@ -38,11 +24,11 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     setTimeout(() => {
-      console.log('timeout');
-      this.obj.name = Math.random();
-    }, 3000);
-  },
+      console.log('timeout')
+      this.obj.name = Math.random()
+    }, 3000)
+  }
 }
 </script>

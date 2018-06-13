@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Newsletter Subscription",
+  "description": "Sign up for free newsletters and get more delivered to your inbox",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 80,
+      "title": "Full Name",
+      "component": "el-input",
+      "attrs": {
+        "placeholder": "Your Full Name",
+        "title": "Please enter your full name"
+      }
+    },
+    "email": {
+      "type": "string",
+      "maxLength": 120,
+      "title": "Email",
+      "component": "el-input",
+      "attrs": {
+        "type": "email",
+        "placeholder": "Your Email"
+      }
+    },
+    "lists": {
+      "type": "string",
+      "title": "List",
+      "enum": ["Daily New", "Promotion"],
+      "component": "el-select",
+      "attrs": {
+        "placeholder": "Select your list subscription"
+      }
+    },
+    "source": {
+      "type": "string",
+      "maxLength": 120,
+      "title": "Source",
+      "description": "Ex. Using the NPM Search Engine",
+      "component": "el-input",
+      "attrs": {
+        "type": "textarea",
+        "placeholder": "How did you hear about us?"
+      }
+    },
+    "agree": {
+      "type": "boolean",
+      "title": "Agree",
+      "description": "You agree to receive occasional updates and special offers for vue-json-schema updates.",
+      "default": false,
+      "component": "el-switch",
+      "attrs": {
+        "type": "checkbox"
+      }
+    },
+    "children": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "component": "el-input"
+            },
+            "age": {
+              "type": "string",
+              "component": "el-input"
+            },
+            "order": {
+              "type": "object",
+              "properties": {
+                "id1": {
+                  "type": "object",
+                  "properties": {
+                    "order_number": {
+                      "type": "string",
+                      "component": "el-input"
+                    },
+                    "product_id": {
+                      "type": "number",
+                      "component": "el-input"
+                    },
+                    "product_number": {
+                      "type": "number",
+                      "component": "el-input"
+                    }
+                  }
+                },
+                "id2": {
+
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "row-1": {
+      "type": "null",
+      "component": "el-row",
+      "attrs": {
+        "gutter": 10
+      },
+      "items": [
+        {
+          "type": "null",
+          "component": "el-col",
+          "attrs": {
+            "span": 8
+          },
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "component": "el-input",
+                  "attrs": {
+                    "width": 100
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "null",
+          "component": "el-col",
+          "attrs": {
+            "span": 8
+          },
+          "items": [
+            {
+              "type": "string",
+              "properties": {
+                "phone": {
+                  "type": "string",
+                  "component": "el-input",
+                  "attrs": {
+                    "width": "100%"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "null",
+          "component": "el-col",
+          "attrs": {
+            "span": 8
+          },
+          "items": {
+            "gener": {
+              "type": "boolean",
+              "component": "el-switch",
+              "attrs": {
+                "offset-text": "否"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["name", "email", "lists"]
+}

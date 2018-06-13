@@ -1,0 +1,319 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "111",
+  "type": ["object", "boolean"],
+  "properties": {
+    "department_id": {
+      "type": "number",
+      "ref_id": "department_id"
+    },
+    "apply_content": {
+      "type": "object",
+      "properties": {
+        "cost_department_id": {
+          "type": "number",
+          "ref_id": "apply_content.cost_department_id"
+        },
+        "amount": {
+          "type": "number",
+          "ref_id": "apply_content.amount"
+        },
+        "bank": {
+          "type": "string",
+          "ref_id": "apply_content.bank"
+        },
+        "bank_account" : {
+          "type": "string",
+          "ref_id": "apply_content.bank_account"
+        },
+        "payee_id": {
+          "type": "number",
+          "ref_id": "apply_content.payee_id"
+        },
+        "general_date": {
+          "type": "string",
+          "ref_id": "apply_content.general_date"
+        },
+        "department_id": {
+          "type": "number",
+          "ref_id": "apply_content.department_id"
+        },
+        "general_content": {
+          "type": "string",
+          "ref_id": "apply_content.general_content"
+        },
+        "invoice_title": {
+          "type": "string",
+          "ref_id": "apply_content.invoice_title"
+        }
+      }
+    },
+    "amount": {
+      "type": "number",
+      "ref_id": "amount"
+    },
+    "is_cost": {
+      "type": "boolean",
+      "ref_id": "is_cost"
+    },
+    "approval_ids": {
+      "type": "array",
+      "ref_id": "approval_ids"
+    },
+    "copy_ids": {
+      "type": "array",
+      "ref_id": "copy_ids"
+    },
+    "general_detail": {
+      "type": "array",
+      "ref_id": "general_detail",
+      "items": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "ref_id": "general_detail...amount"
+          },
+          "content": {
+            "type": "string",
+            "ref_id": "general_detail...content"
+          },
+          "cost_item": {
+            "type": "number",
+            "ref_id": "general_detail...cost_item"
+          }
+        }
+      }
+    },
+    "vouchers":  {
+      "type": "array",
+      "ref_id": "vouchers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "voucher_type": {
+            "type": "number",
+            "ref_id": "vouchers...voucher_type"
+          },
+          "path": {
+            "type": "number",
+            "ref_id": "vouchers...path"
+          }
+        }
+      }
+    }
+  },
+  "display": {
+    "tag": "el-form",
+    "attrs": {},
+    "items": [
+      {
+        "tag": "el-row",
+        "attrs": {
+          "gutter": 10
+        },
+        "items": [
+          {
+            "tag": "el-col",
+            "attrs": {
+              "span": 8
+            },
+            "items": [
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "申请人"
+                },
+                "items": [
+                  {
+                    "tag": "span",
+                    "attrs": {},
+                    "items": [
+                      {
+                        "text": "此处可选固定值还是某些特殊值（当前时间/当前操作人/当前部门/当前部门发票/）"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "el-col",
+            "attrs": {
+              "span": 8
+            },
+            "items": [
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "部门"
+                },
+                "items": [
+                  {
+                    "tag": "span",
+                    "attrs": {},
+                    "items": [
+                      {
+                        "text": "bell研发"
+                      }
+                    ],
+                    "ref_id": "department_id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "el-col",
+            "attrs": {
+              "span": 8
+            },
+            "items": [
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "日期"
+                },
+                "items": [
+                  {
+                    "tag": "span",
+                    "attrs": {},
+                    "items": [
+                      {
+                        "text": "2018/06/13"
+                      }
+                    ],
+                    "ref_id": "apply_content.general_date"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "el-row",
+        "attrs": {
+          "gutter": 10
+        },
+        "items": [
+          {
+            "tag": "el-col",
+            "attrs": {
+              "span": 8
+            },
+            "items": [
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "核算部门"
+                },
+                "items": [
+                  {
+                    "tag": "department-list",
+                    "attrs": {},
+                    "ref_id": "apply_content.cost_department_id"
+                  }
+                ]
+              },
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "发票抬头"
+                },
+                "items": [
+                  {
+                    "tag": "invoice",
+                    "attrs": {},
+                    "ref_id": "apply_content.invoice_title"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "el-row",
+        "attrs": {
+          "gutter": 10
+        },
+        "items": [
+          {
+            "tag": "el-col",
+            "attrs": {
+              "span": 8
+            },
+            "items": [
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "收款人"
+                },
+                "items": [
+                  {
+                    "tag": "employee-list",
+                    "attrs": {},
+                    "ref_id": "apply_content.payee_id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "el-col",
+            "attrs": {
+              "span": 8
+            },
+            "items": [
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "收款银行"
+                },
+                "items": [
+                  {
+                    "tag": "el-input",
+                    "attrs": {},
+                    "ref_id": "apply_content.bank"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "el-col",
+            "attrs": {
+              "span": 8
+            },
+            "items": [
+              {
+                "tag": "el-form-item",
+                "attrs": {
+                  "label": "收款账号"
+                },
+                "items": [
+                  {
+                    "tag": "el-input",
+                    "attrs": {},
+                    "ref_id": "apply_content.bank_account"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "approvel-detail",
+        "attrs": {},
+        "items": [
+          {
+            "tag": "el-input"
+          }
+        ]
+      }
+    ]
+  }
+}
