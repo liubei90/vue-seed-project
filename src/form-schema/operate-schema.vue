@@ -7,20 +7,20 @@
       </div>
       <div class="right-panel">
         <!-- 属性面板 -->
-        <property-panel></property-panel>
+        <property-panel :component-list="componentList"></property-panel>
       </div>
       <div class="center-panel">
         <!-- 预览区域 -->
-        <preview-panel></preview-panel>
+        <preview-panel :component-list="componentList"></preview-panel>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import toolsPanel from './fragment/tools-panel.vue'
-import propertyPanel from './fragment/property-panel.vue'
-import previewPanel from './fragment/preview-panel.vue'
+import toolsPanel from './fragment/tools-panel.vue';
+import propertyPanel from './fragment/property-panel.vue';
+import previewPanel from './fragment/preview-panel.vue';
 export default {
   components: {
     toolsPanel,
@@ -28,9 +28,11 @@ export default {
     previewPanel
   },
   data () {
-    return {}
+    return {
+      componentList: []
+    };
   }
-}
+};
 </script>
 
 <style lang="less">

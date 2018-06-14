@@ -1,41 +1,48 @@
-<template>
+<!-- <template>
   <div>
-    <todo-item :title="title" @change="changeItem"></todo-item>
+    <template v-for="todo in todoList">
+      <slot v-bind:todo="todo">
+        <todo-item :todo="todo"></todo-item>
+      </slot>
+    </template>
   </div>
-</template>
+</template> -->
 
 <script>
 import todoItem from './todo-item.vue';
 
-  export default {
-    components: {
-      todoItem,
-    },
-    data() {
-      return {
-        todoList: [],
-        title: {},
-      }
-    },
-    watch: {
-      'title.name': function(v, old) {
-        console.log('in todo list', old, v);
-      }
-    },
-    created() {
-      setTimeout(() => {
-        this.title = {
-          name: '121'
-        }
-      }, 1000);
-      setTimeout(() => {
-        this.title.name = '10002';
-      }, 3000);
-    },
-    methods: {
-      changeItem() {
-        console.log('emit from item', this.title);
+export default {
+  props: {
+    todoList: {
+      type: Array,
+      default () {
+        return [];
       }
     }
+  },
+  components: {
+    todoItem
+  },
+  data () {
+    return {
+    };
+  },
+  render (h) {
+    const children = this.todoList.map(todo => {
+      if (this.$scopedSlots.default) {
+        return this.$scopedSlots.default({
+          todo
+        });
+      } else {
+        return h('todo-item', {
+          props: {
+            todo
+          }
+        });
+      }
+    });
+
+    return h('div', children);
   }
+};
 </script>

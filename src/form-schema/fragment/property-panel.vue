@@ -12,10 +12,16 @@
 </template>
 
 <script>
-import commonProperty from '../components/common-property.vue'
+import commonProperty from '../components/common-property.vue';
 
 export default {
   props: {
+    componentList: {
+      type: Array,
+      default () {
+        return [];
+      }
+    },
     tool: {
       type: String,
       default: 'common'
@@ -27,12 +33,12 @@ export default {
   data () {
     return {
       tabName: 'tool'
-    }
+    };
   },
   computed: {
     toolPropertyPanel: function () {
-      return commonProperty
+      return commonProperty;
     }
   }
-}
+};
 </script>

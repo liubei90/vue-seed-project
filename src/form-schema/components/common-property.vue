@@ -37,20 +37,20 @@ export default {
   data () {
     return {
       attrs: []
-    }
+    };
   },
   methods: {
     addAttr () {
       this.attrs.push({
         name: '',
         value: ''
-      })
+      });
     },
     removeAttr (index) {
-      this.attrs.splice(index, 1)
+      this.attrs.splice(index, 1);
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

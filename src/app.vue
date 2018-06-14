@@ -14,7 +14,7 @@ export default {
   provide: function () {
     return {
       obj: this.obj
-    }
+    };
   },
   data () {
     return {
@@ -22,13 +22,13 @@ export default {
       obj: {
         name: 'hi, u'
       }
-    }
+    };
   },
   created () {
     setTimeout(() => {
-      console.log('timeout')
-      this.obj.name = Math.random()
-    }, 3000)
+      console.log('timeout');
+      this.obj.name = Math.random();
+    }, 3000);
   }
-}
+};
 </script>

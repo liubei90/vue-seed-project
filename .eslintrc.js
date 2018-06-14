@@ -10,4 +10,7 @@ module.exports = {
   plugins: [
     'html'
   ],
+  rules: {
+    semi: [2, 'always'],
+  }
 };
