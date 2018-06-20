@@ -15,6 +15,7 @@
 
 <script>
 import dragGroup from './drag-group.vue';
+import { components } from '../components/index.js';
 
 export default {
   components: {
@@ -22,25 +23,7 @@ export default {
   },
   data () {
     return {
-      noop: () => {},
-      componentList: [
-        {
-          name: 'common',
-          label: '通用组件'
-        },
-        {
-          name: 'row',
-          label: '行组件'
-        },
-        {
-          name: 'col',
-          label: '列组件'
-        },
-        {
-          name: 'form-item',
-          label: '表单元素组件'
-        }
-      ]
+      componentList: components
     };
   },
   mounted () {

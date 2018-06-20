@@ -7,11 +7,17 @@
       </div>
       <div class="right-panel">
         <!-- 属性面板 -->
-        <property-panel :component-list="componentList"></property-panel>
+        <property-panel 
+          :component-list="componentList" 
+          :component-property-map="componentPropertyMap" 
+          :component="component"></property-panel>
       </div>
       <div class="center-panel">
         <!-- 预览区域 -->
-        <preview-panel :component-list="componentList"></preview-panel>
+        <preview-panel 
+          :component-list="componentList" 
+          :component-property-map="componentPropertyMap"
+          @change="changeComponent"></preview-panel>
       </div>
     </div>
   </div>
@@ -21,6 +27,7 @@
 import toolsPanel from './fragment/tools-panel.vue';
 import propertyPanel from './fragment/property-panel.vue';
 import previewPanel from './fragment/preview-panel.vue';
+
 export default {
   components: {
     toolsPanel,
@@ -29,8 +36,29 @@ export default {
   },
   data () {
     return {
-      componentList: []
+      componentList: [],
+      componentPropertyMap: {},
+      component: null
     };
+  },
+  methods: {
+    initComponentProperty () {
+      if (!this.component) return;
+
+      const componentId = this.component.componentId;
+
+      if (!this.componentPropertyMap[componentId]) {
+        this.$set(this.componentPropertyMap, componentId, {});
+      }
+    },
+    changeComponent ({ type, component }) {
+      switch (type) {
+        case 'change_component':
+          this.component = component;
+          this.initComponentProperty();
+          break;
+      }
+    }
   }
 };
 </script>

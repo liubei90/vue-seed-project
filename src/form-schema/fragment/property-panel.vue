@@ -2,7 +2,10 @@
   <div>
     <el-tabs v-model="tabName">
       <el-tab-pane label="组件属性" name="tool">
-        <component :is="toolPropertyPanel"></component>
+        <component 
+          :is="toolPropertyPanel" 
+          :meta="property" 
+          @change="changeProperty"></component>
       </el-tab-pane>
       <el-tab-pane label="表单属性" name="form">
         hahha
@@ -12,9 +15,10 @@
 </template>
 
 <script>
-import commonProperty from '../components/common-property.vue';
+import { propertyComponentMap, propertyComponentMixin } from '../components/index.js';
 
 export default {
+  mixins: [ propertyComponentMixin ],
   props: {
     componentList: {
       type: Array,
@@ -22,13 +26,16 @@ export default {
         return [];
       }
     },
-    tool: {
-      type: String,
-      default: 'common'
+    componentPropertyMap: {
+      type: Object,
+      default  () {
+        return {};
+      }
+    },
+    component: {
+      type: Object,
+      default: null
     }
-  },
-  components: {
-    commonProperty
   },
   data () {
     return {
@@ -37,7 +44,32 @@ export default {
   },
   computed: {
     toolPropertyPanel: function () {
-      return commonProperty;
+      if (this.component) {
+        return propertyComponentMap[this.component.name] || 'div';
+      }
+
+      return 'div';
+    },
+    property: function () {
+      if (this.component) {
+        const componentId = this.component.componentId;
+
+        if (this.componentPropertyMap[componentId]) {
+          return this.componentPropertyMap[componentId];
+        }
+      }
+      return {};
+    }
+  },
+  methods: {
+    changeProperty ({ type, name, value }) {
+      if (type === 'property_change') {
+        if (this.property.hasOwnProperty(name)) {
+          this.property[name] = value;
+        } else {
+          this.$set(this.property, name, value);
+        }
+      }
     }
   }
 };

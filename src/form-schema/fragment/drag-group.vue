@@ -1,4 +1,6 @@
 <script>
+// import { throttle } from '@/utils/index.js';
+
 export default {
   props: {
     groupTag: {
@@ -11,6 +13,12 @@ export default {
         return [];
       }
     }
+  },
+  data () {
+    return {
+      dragHover: false, // 判断当前group是否有被拖拽的对象（自身dragList的对象或者其他组件中被拖拽过来的对象）
+      hoverData: null
+    };
   },
   render (h) {
     const DNDType = `text/x-bell-${this.groupTag}`;
@@ -26,15 +34,16 @@ export default {
     const data = {};
     // 通过消息的target元素获取list的子项数据
     function getDataByTarget (elm) {
-      const child = children.filter(child => child.elm === elm)[0];
+      while (elm) {
+        const child = children.filter(child => child.elm === elm)[0];
 
-      if (child) {
-        return dragList[children.indexOf(child)];
+        if (child) {
+          return dragList[children.indexOf(child)];
+        }
+        elm = elm.parentNode;
       }
       return null;
     }
-
-    console.log(children);
 
     data.on = {
       dragstart: event => {
@@ -44,7 +53,7 @@ export default {
         if (dragData) {
           event.dataTransfer.setData(DNDType, JSON.stringify(dragData));
           this.$emit('drag', {
-            type: 'dragstart',
+            type: 'drag_start',
             data: dragData
           });
         } else {
@@ -56,19 +65,34 @@ export default {
         event.preventDefault();
         event.stopPropagation();
 
+        // 当前group存在拖拽元素悬停
+        this.dragHover = true;
+
         const target = event.target;
         const dragData = getDataByTarget(target);
 
         if (dragData) {
-          this.$emit('drap', {
-            type: 'dragover',
-            data: dragData
+          if (this.hoverData !== dragData) {
+            this.$emit('drag', {
+              type: 'hover_change',
+              from: this.hoverData,
+              to: dragData
+            });
+            this.hoverData = dragData;
+          }
+        } else if (this.hoverData) {
+          this.$emit('drag', {
+            type: 'hover_change',
+            from: this.hoverData,
+            to: null
           });
+          this.hoverData = null;
         }
       },
       drop: event => {
         event.preventDefault();
         event.stopPropagation();
+        this.draging = false;
 
         let data = event.dataTransfer.getData(DNDType);
 
@@ -85,6 +109,35 @@ export default {
 
           }
         }
+      },
+      dragenter: event => {
+        const target = event.target;
+
+        if (this.$el === target) {
+          if (!this.dragHover) {
+            this.$emit('drag', {
+              type: 'drag_enter'
+            });
+          }
+        }
+      },
+      dragleave: event => {
+        const target = event.target;
+
+        // fixme: 如果元素离开速度太快，该事件可能不会被触发
+        if (this.$el === target) {
+          // 延时100ms,如果之后有dragover事件执行，
+          // 说明这个dragleave事件为假（拖拽元素进入group的内部子元素），
+          // 否者为真（拖拽元素离开group），触发drag_leave事件
+          this.dragHover = false;
+          setTimeout(() => {
+            if (!this.dragHover) {
+              this.$emit('drag', {
+                type: 'drag_leave'
+              });
+            }
+          }, 100);
+        }
       }
     };
 
@@ -94,6 +147,8 @@ export default {
     };
 
     return h('div', data, children);
-  }
+  },
+  created () {},
+  methods: {}
 };
 </script>

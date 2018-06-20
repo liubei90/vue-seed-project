@@ -1,84 +1,132 @@
 <template>
-  <div>
+  <div class="preview-panel">
     <drag-group 
       group-tag="tools" 
       :drag-list="componentList" 
       @drag="dragTool">
-      <component 
-        slot-scope="drag" 
-        :is="getComponent(drag.item)" 
-        v-bind="drag.item"></component>
-      <!-- <div slot-scope="drag">
-        {{ drag.item.label + drag.item.name }}
-      </div> -->
+      <div 
+        slot-scope="{ item }" 
+        :class="{'component-activated': component === item, 'component-hover': hoverComponent === item}" 
+        class="component-item" 
+        @click="changeAvtivatedComponent(item)">
+        <component 
+          :is="getComponent(item)" 
+          v-bind="componentPropertyMap[item.componentId]"></component>
+        <div class="hover-footer"></div>
+      </div>
     </drag-group>
   </div>
 </template>
 
 <script>
 import dragGroup from './drag-group.vue';
-import common from '../components/common.vue';
-import row from '../components/row.vue';
-import col from '../components/col.vue';
-import formItem from '../components/form-item.vue';
-
-const componentMap = {
-  'common': common,
-  'row': row,
-  'col': col,
-  'form-item': formItem
-};
+import { componentMap, componentMixin } from '../components/index.js';
 
 export default {
+  mixins: [ componentMixin ],
   props: {
     componentList: {
       type: Array,
       default () {
         return [];
       }
+    },
+    componentPropertyMap: {
+      type: Object,
+      default  () {
+        return {};
+      }
     }
   },
   components: {
-    dragGroup,
-    common,
-    row,
-    col,
-    formItem
+    dragGroup
   },
   data () {
-    return {};
+    return {
+      component: null,
+      hoverComponent: null
+    };
+  },
+  watch: {
+    component () {
+      this.$emit('change', {
+        type: 'change_component',
+        component: this.component
+      });
+    }
   },
   methods: {
     getComponent (item) {
-      console.log(JSON.stringify(item));
       const { name } = item;
-
-      console.log(componentMap[name]);
 
       return componentMap[name] || 'div';
     },
-    dragstart (data) {
+    dragStart (data) {
       ;
     },
-    dragover (data) {
+    dragChange (from, to) {
+      this.hoverComponent = to;
+    },
+    dragEnter () {
       ;
+    },
+    dragLeave () {
+      this.hoverComponent = null;
     },
     drop (data) {
-      this.componentList.push(data);
+      if (!data) return;
+
+      data.componentId = Math.random().toFixed(5);
+
+      if (this.hoverComponent) {
+        const index = this.componentList.indexOf(this.hoverComponent);
+
+        this.componentList.splice(index + 1, 0, data);
+      } else {
+        this.componentList.push(data);
+      }
+      this.component = data;
+      this.hoverComponent = null;
     },
-    dragTool ({ type, data }) {
+    dragTool ({ type, data, from, to }) {
       switch (type) {
-        case 'dragstart':
-          this.dragstart(data);
+        case 'drag_start':
+          this.dragStart(data);
           break;
-        case 'dragover':
-          this.dragover(data);
+        case 'hover_change':
+          this.dragChange(from, to);
+          break;
+        case 'drag_enter':
+          this.dragEnter();
+          break;
+        case 'drag_leave':
+          this.dragLeave();
           break;
         case 'drop':
           this.drop(data);
           break;
       }
+    },
+    changeAvtivatedComponent (item) {
+      this.component = item || null;
     }
   }
 };
 </script>
+
+<style lang="less">
+.preview-panel {
+  .component-item {
+    border: 1px dashed #9B9BB1;
+    &.component-activated {
+      border: 1px dashed red;
+    }
+    &.component-hover {
+      .hover-footer {
+        border: 1px dashed blue;
+        height: 2px;
+      }
+    }
+  }
+}
+</style>
