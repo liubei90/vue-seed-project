@@ -16,6 +16,22 @@ const router = new Router({
       component: () => import('./test/test.vue')
     },
     {
+      path: '/test/computed',
+      component: () => import('./test/computed.vue')
+    },
+    {
+      path: '/test/ref',
+      component: () => import('./test/ref_test.vue')
+    },
+    {
+      path: '/element/dialog_select',
+      component: () => import('./elementui/dialog_select.vue')
+    },
+    {
+      path: '/vueinstance/create-and-computed',
+      component: () => import('./vueinstance/createAndComputed.vue')
+    },
+    {
       path: '/user/:id',
       component: () => import('./test/user.vue'),
       props: true

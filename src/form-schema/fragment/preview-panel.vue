@@ -76,6 +76,8 @@ export default {
     drop (data) {
       if (!data) return;
 
+      // fixme: 需要判断是否拖拽的起点是预览面板，此时只做替换位置操作。如果起点是工具盒，就进行增加操作
+      // fixme: 自动生成组件实例的id,需要重新定义规则
       data.componentId = Math.random().toFixed(5);
 
       if (this.hoverComponent) {

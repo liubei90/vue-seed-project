@@ -18,7 +18,7 @@ export default {
   data () {
     return {
       metaProps: {
-        rawHtml: ''
+        rawHtml: '<div>请设置html文本内容</div>'
       }
     };
   },

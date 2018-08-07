@@ -8,6 +8,19 @@ export const componentEnum = {
   COMPONENT_HTML: 'component-html'
 };
 
+export const componentPropertyEnum = {
+  COMMON: 'common-property',
+  COMPONENT_HTML: 'component-html-property'
+};
+
+export const componentToPropertyMap = Object.keys(componentEnum)
+  .reduce((map, item) => {
+    if (componentPropertyEnum[item]) {
+      map[componentEnum[item]] = componentPropertyEnum[item];
+    }
+    return map;
+  }, {});
+
 export const components = [
   { name: componentEnum.COMMON, label: '通用组件' },
   { name: componentEnum.COMPONENT_HTML, label: 'html组件' }
@@ -19,8 +32,8 @@ export const componentMap = {
 };
 
 export const propertyComponentMap = {
-  [componentEnum.COMMON]: commonProperty,
-  [componentEnum.COMPONENT_HTML]: componentHtmlProperty
+  [componentPropertyEnum.COMMON]: commonProperty,
+  [componentPropertyEnum.COMPONENT_HTML]: componentHtmlProperty
 };
 
 export const componentMixin = {

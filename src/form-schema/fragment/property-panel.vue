@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { propertyComponentMap, propertyComponentMixin } from '../components/index.js';
+import { propertyComponentMap, propertyComponentMixin, componentToPropertyMap } from '../components/index.js';
 
 export default {
   mixins: [ propertyComponentMixin ],
@@ -45,7 +45,7 @@ export default {
   computed: {
     toolPropertyPanel: function () {
       if (this.component) {
-        return propertyComponentMap[this.component.name] || 'div';
+        return propertyComponentMap[componentToPropertyMap[this.component.name]] || 'div';
       }
 
       return 'div';

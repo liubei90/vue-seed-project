@@ -43,7 +43,7 @@ export default {
     return {
       metaProps: {
         tagName: '',
-        attrs: () => ({})
+        attrs: () => []
       },
       self_tagName: '',
       self_attrs: []
@@ -59,20 +59,7 @@ export default {
   },
   methods: {
     resetData () {
-      this.self_tagName = this.meta.tagName;
-
-      const attrkeys = Object.keys(this.meta.attrs);
-      const tmp = [];
-
-      for (let i = 0; i < attrkeys.length; i++) {
-        tmp.push({
-          name: attrkeys[i],
-          value: this.meta.attrs[attrkeys[i]],
-          attrId: Math.random()
-        });
-      }
-
-      this.self_attrs = tmp;
+      ;
     },
     addAttr () {
       this.self_attrs.push({
@@ -86,17 +73,7 @@ export default {
     },
     submit () {
       this.meta.tagName = this.self_tagName;
-      const tmp = {};
-
-      for (let i = 0; i < this.self_attrs.length; i++) {
-        const attr = this.self_attrs[i];
-
-        if (attr.name && (attr.value !== undefined)) {
-          tmp[attr.name] = attr.value;
-        }
-      }
-
-      this.meta.attrs = tmp;
+      this.meta.attrs = this.self_attrs.map(item => Object.assign({}, item));
     }
   }
 };

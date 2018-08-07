@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="tagName">
-      <component :is="tagName" v-bind="attrs"></component>
+      <component :is="tagName" v-bind="arrtsMap"></component>
     </template>
     <div v-else>
       请设置组件类型
@@ -17,14 +17,22 @@ export default {
       default: ''
     },
     attrs: {
-      type: Object,
+      type: Array,
       default () {
-        return {};
+        return [];
       }
     }
   },
   data () {
     return {};
+  },
+  computed: {
+    arrtsMap () {
+      return this.attrs.reduce((map, item) => {
+        map[item.name] = item.value;
+        return map;
+      }, {});
+    }
   }
 };
 </script>
