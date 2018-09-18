@@ -9,7 +9,7 @@ Vue.use(Router);
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
 
 const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/test',
@@ -22,6 +22,14 @@ const router = new Router({
     {
       path: '/test/ref',
       component: () => import('./test/ref_test.vue')
+    },
+    {
+      path: '/test/slot',
+      component: () => import('./test/slot_test.vue')
+    },
+    {
+      path: '/test/watch_when_created',
+      component: () => import('./test/watch_when_created.vue')
     },
     {
       path: '/element/dialog_select',
@@ -47,6 +55,22 @@ const router = new Router({
     {
       path: '/schema',
       component: () => import('./form-schema/operate-schema.vue')
+    },
+    {
+      path: '/router',
+      component: () => import('./router-test/index.vue')
+    },
+    {
+      name: 'router-params',
+      path: '/router/params/:id',
+      component: () => import('./router-test/params.vue'),
+      props: true
+    },
+    {
+      name: 'router-props',
+      path: '/router/props',
+      component: () => import('./router-test/props.vue'),
+      props: (route) => ({ id: route.query.id })
     },
     {
       path: '*',

@@ -1,15 +1,15 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
     index: './src/index.js',
-    libs: './libs/ajv.bundle.js'
   },
   output: {
-    path: path.join(__dirname, './build'),
+    path: path.join(__dirname, './build_product'),
     filename: '[name].js',
     // chunkFilename: '[id].js',
     publicPath: '/',
@@ -54,19 +54,19 @@ module.exports = {
     ],
   },
   externals: {
-    // Ajv: 'Ajv'
+    Ajv: 'Ajv'
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
-      chunksSortMode: 'dependency',
-      chunks: ['index', 'libs'],
+      template: 'index_product.html',
+      chunks: ['index'],
     }),
     new VueLoaderPlugin(),
+    new CopyWebpackPlugin([
+      { 
+        from: './libs/**/*',
+        to: './' // 如果是相对路径时，是相对于输出的？
+      }
+    ]),
   ],
-  devServer: {
-    contentBase: [path.join(__dirname, 'build')],
-    port: 9000,
-    // historyApiFallback: true,
-  }
 }

@@ -94,7 +94,11 @@ export default {
         event.stopPropagation();
         this.draging = false;
 
+        let allData = event.dataTransfer.getData();
+        console.log(allData);
+
         let data = event.dataTransfer.getData(DNDType);
+        console.log(data);
 
         if (data) {
           try {

@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import Ajv from 'Ajv';
+import draft06 from '@@/json-schema-draft-06.json';
 import toolsPanel from './fragment/tools-panel.vue';
 import propertyPanel from './fragment/property-panel.vue';
 import previewPanel from './fragment/preview-panel.vue';
@@ -40,6 +42,31 @@ export default {
       componentPropertyMap: {},
       component: null
     };
+  },
+  created () {
+    console.log(Ajv);
+    // console.log(draft06);
+
+    var ajv = new Ajv();
+
+    var validate = ajv.addMetaSchema(draft06).compile({
+      type: 'object',
+      properties: {
+        type: {
+          type: 'string',
+          enum: ['jone']
+        }
+      }
+    });
+
+    console.log(validate({
+      type: 'jone'
+    }));
+
+    console.log(validate({
+      type: 'jone1'
+    }));
+
   },
   methods: {
     initComponentProperty () {
