@@ -1,3 +1,7 @@
+/** 
+* created函数中修改状态，会触发watch响应
+* watch只有响应函数时，只会在依赖状态被修改时被调用
+*/
 <template>
   <div>
     <button @click="count++">count+1</button>
@@ -18,11 +22,13 @@ export default {
   },
   watch: {
     count() {
+      console.log('watch count');
       this.countList.push(this.count);
     }
   },
   created() {
     this.count++;
+    console.log('created');
   }
 }
 </script>
