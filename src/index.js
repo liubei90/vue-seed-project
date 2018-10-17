@@ -32,8 +32,16 @@ const router = new Router({
       component: () => import('./test/watch_when_created.vue')
     },
     {
+      path: '/test/event-flow',
+      component: () => import('./test/event-flow.vue')
+    },
+    {
       path: '/element/dialog_select',
       component: () => import('./elementui/dialog_select.vue')
+    },
+    {
+      path: '/element/form',
+      component: () => import('./elementui/form.vue')
     },
     {
       path: '/vueinstance/create-and-computed',
