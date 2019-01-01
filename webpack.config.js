@@ -19,6 +19,7 @@ module.exports = {
     alias: {
       '@': path.join(__dirname, './src'),
       '@@': path.join(__dirname, './static'),
+      '@modules': path.join(__dirname, './src/modules')
     }
   },
   module: {
