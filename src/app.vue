@@ -1,6 +1,6 @@
 <template>
   <div>
-      234{{title}}123
+    hello, world
       <transition>
         <keep-alive :exclude="/NotAlive$/">
             <router-view />

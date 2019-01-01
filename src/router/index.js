@@ -8,6 +8,7 @@ import routerTest from './router-test';
 import test from './test';
 import todolist from './todolist';
 import vueinstance from './vueinstance';
+import echarts from './echarts';
 
 Vue.use(Router);
 
@@ -20,6 +21,7 @@ export default new Router({
     ...test,
     ...todolist,
     ...vueinstance,
+    ...echarts,
     {
       path: '*',
       component: NotFound
