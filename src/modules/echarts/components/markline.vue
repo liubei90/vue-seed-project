@@ -33,21 +33,49 @@ export default {
       this.instance.setOption({
         animation: false,
         xAxis: {
+          axisLine: {
+            show: false,
+          },
           type: 'category',
           data: ['2016', '2017', '2018'],
         },
-        yAxis: {
-          type: 'value',
-        },
+        yAxis: [
+          {
+            axisLine: {
+              show: false,
+            },
+            type: 'value',
+          },
+          {
+            axisLine: {
+              show: false,
+            },
+            splitLine: {
+              show: false,
+            },
+            type: 'value',
+            min: 0,
+            max: 100,
+          }
+        ],
         series: [
           {
             type: 'line',
             data: [100, 120, 164],
             // markLine: this.getNormalMarkLine(),
-            markLine: this.getMyyMarkLine(),
+            // markLine: this.getMyyMarkLine(),
+            markLine: this.getMarkLine3(),
+          },
+          {
+            type: 'line',
+            yAxisIndex: 1,
+            data: [26, 55, 12],
+            markLine: this.getMarkLine4(),
           }
         ]
       });
+
+      console.log(this.instance.getOption());
     },
     getNormalMarkLine() {
       return {
@@ -75,6 +103,31 @@ export default {
           ]
         ]
       }
+    },
+    getMarkLine3() {
+      return {
+        symbol: 'none',
+        label: {
+          position: 'start',
+          formatter: '均值{c}',
+        },
+        data: [
+          // {type: 'average'},
+          { yAxis: 129 }
+        ]
+      }
+    },
+    getMarkLine4() {
+      return {
+        symbol: 'none',
+        label: {
+          position: 'end',
+          formatter: '率均值{c}%',
+        },
+        data: [
+          { yAxis: 80 },
+        ]
+      };
     }
   },
 }
