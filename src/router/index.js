@@ -9,6 +9,7 @@ import test from './test';
 import todolist from './todolist';
 import vueinstance from './vueinstance';
 import echarts from './echarts';
+import video from './video';
 
 Vue.use(Router);
 
@@ -22,6 +23,7 @@ export default new Router({
     ...todolist,
     ...vueinstance,
     ...echarts,
+    ...video,
     {
       path: '*',
       component: NotFound
